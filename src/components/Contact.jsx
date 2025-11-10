@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Send, Github, Linkedin, Mail } from 'lucide-react';
 import emailjs from 'emailjs-com';
 import './Contact.css';
-import XIcon from '/assets/X.svg'; // Import the SVG directly
+import XIcon from '../assets/X.svg'; // Import the SVG directly
 
 const Contact = () => {
   const [formData, setFormData] = useState({ 
