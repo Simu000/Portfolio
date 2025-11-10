@@ -1,5 +1,6 @@
 import "./About.css";
 import React from "react";
+import simu from "../assets/simu.jpg";
 
 export default function About() {
   return (
@@ -14,7 +15,7 @@ export default function About() {
           <div className="flex-shrink-0 lg:w-1/3 flex justify-center">
             <div className="profile-image-container">
               <img
-                src="../src/assets/simu"
+                src={simu}
                 alt="Harsimrat Kaur"
                 className="profile-image"
               />
