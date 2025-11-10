@@ -1,0 +1,407 @@
+/* Add top margin to content and skills except profile image */
+.about-content-margin {
+  margin-top: 2px;
+  margin-right: 30px;
+}
+
+/* Padding for Skills & Technologies section */
+.skills-section {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.skills-heading {
+  padding-top: 12px;
+  padding-bottom: 35px;
+}
+
+/* Padding for About Me heading */
+.about-heading {
+  margin-top: 5vh;
+  padding-top: 70px;
+  padding-bottom: 24px;
+  text-align: center;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* About Section Centering */
+#about {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100vh !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Profile Image Styling */
+.profile-image-container {
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  padding: 8px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  margin: 0 auto;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+  transform: scale(1.05);
+}
+
+/* Skills & Technologies */
+.skill-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  min-height: 56px;
+}
+
+.skill-badge:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.skill-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.skill-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+}
+
+/* Specific icon styling */
+.html-icon {
+  background: rgba(227, 79, 38, 0.2);
+  color: #e34f26;
+  border: 1px solid rgba(227, 79, 38, 0.3);
+}
+
+.css-icon {
+  background: rgba(21, 114, 182, 0.2);
+  color: #1572b6;
+  border: 1px solid rgba(21, 114, 182, 0.3);
+}
+
+.js-icon {
+  background: rgba(247, 223, 30, 0.2);
+  color: #f7df1e;
+  border: 1px solid rgba(247, 223, 30, 0.3);
+}
+
+.react-icon {
+  background: rgba(97, 218, 251, 0.2);
+  color: #61dafb;
+  border: 1px solid rgba(97, 218, 251, 0.3);
+}
+
+.tailwind-icon {
+  background: rgba(56, 178, 172, 0.2);
+  color: #38b2ac;
+  border: 1px solid rgba(56, 178, 172, 0.3);
+}
+
+.node-icon {
+  background: rgba(104, 160, 99, 0.2);
+  color: #68a063;
+  border: 1px solid rgba(104, 160, 99, 0.3);
+}
+
+.express-icon {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.mongodb-icon {
+  background: rgba(71, 162, 72, 0.2);
+  color: #47a248;
+  border: 1px solid rgba(71, 162, 72, 0.3);
+}
+
+.cpp-icon {
+  background: rgba(0, 89, 156, 0.2);
+  color: #00599c;
+  border: 1px solid rgba(0, 89, 156, 0.3);
+}
+
+.csharp-icon {
+  background: rgba(147, 61, 179, 0.2);
+  color: #933db3;
+  border: 1px solid rgba(147, 61, 179, 0.3);
+}
+
+.python-icon {
+  background: rgba(55, 118, 171, 0.2);
+  color: #3776ab;
+  border: 1px solid rgba(55, 118, 171, 0.3);
+}
+
+.postgres-icon {
+  background: rgba(51, 103, 145, 0.2);
+  color: #336791;
+  border: 1px solid rgba(51, 103, 145, 0.3);
+}
+
+.nextjs-icon {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+/* Text animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.about-text {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Profile Image Wrapper with Glow */
+.profile-image-wrapper {
+  position: relative;
+  width: 350px;
+  height: 350px;
+  animation: fadeInScale 1s ease-out;
+  margin: 0 auto;
+}
+
+/* Blurry white glow behind profile */
+.profile-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 40%, transparent 70%);
+  filter: blur(40px);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.profile-image-container:hover {
+  transform: scale(1.05);
+  box-shadow: 
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    inset 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.profile-image-container:hover .profile-image {
+  transform: scale(1.05);
+}
+
+.skill-badge:nth-child(1) { animation-delay: 0.1s; }
+.skill-badge:nth-child(2) { animation-delay: 0.15s; }
+.skill-badge:nth-child(3) { animation-delay: 0.2s; }
+.skill-badge:nth-child(4) { animation-delay: 0.25s; }
+.skill-badge:nth-child(5) { animation-delay: 0.3s; }
+.skill-badge:nth-child(6) { animation-delay: 0.35s; }
+.skill-badge:nth-child(7) { animation-delay: 0.4s; }
+.skill-badge:nth-child(8) { animation-delay: 0.45s; }
+.skill-badge:nth-child(9) { animation-delay: 0.5s; }
+.skill-badge:nth-child(10) { animation-delay: 0.55s; }
+.skill-badge:nth-child(11) { animation-delay: 0.6s; }
+.skill-badge:nth-child(12) { animation-delay: 0.65s; }
+.skill-badge:nth-child(13) { animation-delay: 0.7s; }
+.skill-badge:nth-child(14) { animation-delay: 0.75s; }
+
+.skill-badge:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.skill-badge:hover .skill-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .about-content-margin {
+    left: 0;
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .profile-image-container {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .profile-image-wrapper {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .profile-glow {
+    width: 320px;
+    height: 320px;
+  }
+  
+  .about-heading {
+    left: 0;
+    position: static;
+    text-align: center;
+  }
+  
+  .about-content-margin {
+    left: 0;
+    margin-right: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-image-container {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .profile-image-wrapper {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .profile-glow {
+    width: 280px;
+    height: 280px;
+  }
+  
+  .about-heading {
+    left: 0;
+    position: static;
+    text-align: center;
+    padding-top: 40px;
+  }
+  
+  .about-content-margin {
+    left: 0;
+    margin-right: 10px;
+  }
+  
+  .skill-badge {
+    padding: 8px 10px;
+    min-height: 44px;
+  }
+  
+  .skill-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 11px;
+  }
+  
+  .skill-text {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-image-container {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .profile-image-wrapper {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .profile-glow {
+    width: 240px;
+    height: 240px;
+  }
+  
+  .about-heading {
+    left: 0;
+    position: static;
+    text-align: center;
+    padding-top: 30px;
+  }
+  
+  .about-content-margin {
+    left: 0;
+    margin-right: 5px;
+  }
+  
+  .skill-badge {
+    padding: 7px 9px;
+    min-height: 40px;
+  }
+  
+  .skill-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
+  }
+  
+  .skill-text {
+    font-size: 11px;
+  }
+}
