@@ -4,8 +4,17 @@ import * as THREE from 'three';
 export default function PortfolioLanding() {
   const mountRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Check if mobile on mount and on resize
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     if (!mountRef.current) return;
 
     // Scene setup
@@ -18,7 +27,7 @@ export default function PortfolioLanding() {
       0.1,
       1000
     );
-    camera.position.z = 5;
+    camera.position.z = isMobile ? 6 : 5;
 
     const renderer = new THREE.WebGLRenderer({ 
       antialias: true,
@@ -29,7 +38,8 @@ export default function PortfolioLanding() {
     mountRef.current.appendChild(renderer.domElement);
 
     // Create textured sphere with more organic distortion
-    const geometry = new THREE.SphereGeometry(1.2, 256, 256);
+    const sphereSize = isMobile ? 0.8 : 1.2;
+    const geometry = new THREE.SphereGeometry(sphereSize, isMobile ? 128 : 256, isMobile ? 128 : 256);
     
     // Create more complex distortion for organic look
     const positions = geometry.attributes.position;
@@ -43,7 +53,7 @@ export default function PortfolioLanding() {
       const noise3 = Math.cos(vertex.x * 8 - vertex.z * 5) * 0.04;
       
       const totalNoise = noise1 + noise2 + noise3;
-      vertex.normalize().multiplyScalar(1.2 + totalNoise);
+      vertex.normalize().multiplyScalar(sphereSize + totalNoise);
       
       positions.setXYZ(i, vertex.x, vertex.y, vertex.z);
     }
@@ -60,8 +70,9 @@ export default function PortfolioLanding() {
     const sphere = new THREE.Mesh(geometry, material);
     scene.add(sphere);
 
-    // Create orbital ring
-    const ringGeometry = new THREE.TorusGeometry(2.2, 0.015, 16, 100);
+    // Create orbital ring (smaller on mobile)
+    const ringSize = isMobile ? 1.8 : 2.2;
+    const ringGeometry = new THREE.TorusGeometry(ringSize, 0.015, 16, 100);
     const ringMaterial = new THREE.MeshStandardMaterial({
       color: 0x666666,
       metalness: 0.8,
@@ -76,11 +87,11 @@ export default function PortfolioLanding() {
 
     // Create segmented ring parts
     const segments = [];
-    const segmentCount = 12;
+    const segmentCount = isMobile ? 8 : 12;
     const segmentAngle = (Math.PI * 2) / segmentCount;
     
     for (let i = 0; i < segmentCount; i++) {
-      const segGeometry = new THREE.TorusGeometry(2.2, 0.02, 8, 50, segmentAngle * 0.7);
+      const segGeometry = new THREE.TorusGeometry(ringSize, 0.02, 8, 50, segmentAngle * 0.7);
       const segMaterial = new THREE.MeshStandardMaterial({
         color: 0x888888,
         metalness: 0.9,
@@ -100,7 +111,7 @@ export default function PortfolioLanding() {
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    const keyLight = new THREE.DirectionalLight(0xffffff, isMobile ? 1.2 : 1.5);
     keyLight.position.set(5, 5, 5);
     scene.add(keyLight);
 
@@ -128,6 +139,8 @@ export default function PortfolioLanding() {
     let targetY = 0;
 
     const handleMouseMove = (e) => {
+      if (isMobile) return; // Disable mouse interaction on mobile
+      
       mouseX = (e.clientX / window.innerWidth) * 2 - 1;
       mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
       
@@ -136,13 +149,34 @@ export default function PortfolioLanding() {
       setIsHovered(distFromCenter < 0.3);
     };
 
+    // Touch interaction for mobile
+    const handleTouchMove = (e) => {
+      if (!isMobile) return;
+      
+      const touch = e.touches[0];
+      mouseX = (touch.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(touch.clientY / window.innerHeight) * 2 + 1;
+      
+      // Auto-hover effect on mobile
+      setIsHovered(true);
+    };
+
+    const handleTouchEnd = () => {
+      if (isMobile) {
+        setIsHovered(false);
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleTouchEnd);
 
     // Handle resize
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+      checkMobile();
     };
     window.addEventListener('resize', handleResize);
 
@@ -156,17 +190,24 @@ export default function PortfolioLanding() {
       
       const elapsedTime = clock.getElapsedTime();
       
-      // Smooth mouse follow
-      targetX += (mouseX * 0.3 - targetX) * 0.05;
-      targetY += (mouseY * 0.3 - targetY) * 0.05;
+      // Smooth mouse follow (disabled on mobile)
+      if (!isMobile) {
+        targetX += (mouseX * 0.3 - targetX) * 0.05;
+        targetY += (mouseY * 0.3 - targetY) * 0.05;
+      }
       
-      // Slow, subtle rotation
-      sphere.rotation.y = elapsedTime * 0.08 + targetX * 0.5;
-      sphere.rotation.x = elapsedTime * 0.04 + targetY * 0.5;
+      // Slow, subtle rotation (auto-rotate on mobile)
+      if (isMobile) {
+        sphere.rotation.y = elapsedTime * 0.1;
+        sphere.rotation.x = Math.sin(elapsedTime * 0.05) * 0.3;
+      } else {
+        sphere.rotation.y = elapsedTime * 0.08 + targetX * 0.5;
+        sphere.rotation.x = elapsedTime * 0.04 + targetY * 0.5;
+      }
       
       // Ring animation on hover
       const distFromCenter = Math.sqrt(mouseX * mouseX + mouseY * mouseY);
-      targetRingOpacity = distFromCenter < 0.3 ? 0.8 : 0;
+      targetRingOpacity = (isMobile || distFromCenter < 0.3) ? 0.8 : 0;
       currentRingOpacity += (targetRingOpacity - currentRingOpacity) * 0.1;
       
       // Update ring segments opacity
@@ -193,7 +234,10 @@ export default function PortfolioLanding() {
     // Cleanup
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', checkMobile);
       if (mountRef.current && renderer.domElement) {
         mountRef.current.removeChild(renderer.domElement);
       }
@@ -207,7 +251,7 @@ export default function PortfolioLanding() {
       });
       renderer.dispose();
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div className="relative w-full h-screen bg-black text-white overflow-hidden">
@@ -215,11 +259,11 @@ export default function PortfolioLanding() {
       <div ref={mountRef} className="absolute inset-0 z-0 h-screen" />
       
       {/* Content Overlay */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-screen px-6">
+      <div className="relative z-10 flex flex-col items-center justify-center h-screen px-4 sm:px-6">
         {/* Main Title */}
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-2 sm:space-y-4">
           <h1 
-            className="text-6xl md:text-8xl font-light tracking-[0.3em] text-white"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-light tracking-[0.2em] sm:tracking-[0.3em] text-white px-2"
             style={{ 
               fontFamily: 'system-ui, -apple-system, sans-serif',
               textShadow: '0 0 40px rgba(255,255,255,0.05)'
@@ -228,7 +272,7 @@ export default function PortfolioLanding() {
             HARSIMRAT
           </h1>
           <h2 
-            className="text-6xl md:text-8xl font-light tracking-[0.3em] text-white"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-light tracking-[0.2em] sm:tracking-[0.3em] text-white px-2"
             style={{ 
               fontFamily: 'system-ui, -apple-system, sans-serif',
               textShadow: '0 0 40px rgba(255,255,255,0.05)'
@@ -237,7 +281,7 @@ export default function PortfolioLanding() {
             KAUR
           </h2>
           <p 
-            className="text-sm md:text-base tracking-[0.4em] text-gray-400 mt-6"
+            className="text-xs sm:text-sm md:text-base tracking-[0.3em] sm:tracking-[0.4em] text-gray-400 mt-4 sm:mt-6 px-4"
             style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
           >
             CLARITY, FOCUS, IMPACT
@@ -245,20 +289,21 @@ export default function PortfolioLanding() {
         </div>
 
         {/* Bottom Info */}
-        <div className="absolute bottom-12 left-12 text-xs text-gray-600 tracking-wider">
-          <p>2ND YEAR SOFTWARE ENGINEERING</p>
-          <p>STUDENT</p>
+        <div className="absolute bottom-8 sm:bottom-12 left-4 sm:left-12 text-[10px] xs:text-xs text-gray-600 tracking-wider">
+          <p>2ND YEAR SOFTWARE</p>
+          <p>ENGINEERING STUDENT</p>
         </div>
         
-        <div className="absolute bottom-12 right-12 text-xs text-gray-600 tracking-wider text-right">
-          <p>EXPERTISE IN NEXT, REACT, NODE, EXPRESS,</p>
-          <p>TAILWIND</p>
+        <div className="absolute bottom-8 sm:bottom-12 right-4 sm:right-12 text-[10px] xs:text-xs text-gray-600 tracking-wider text-right">
+          <p className="hidden xs:block">EXPERTISE IN NEXT, REACT,</p>
+          <p className="xs:hidden">NEXT, REACT, NODE,</p>
+          <p>NODE, EXPRESS, TAILWIND</p>
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-bounce">
-          <div className="w-px h-8 bg-gradient-to-b from-transparent via-gray-600 to-transparent opacity-50" />
-          <p className="text-sm text-gray-400 tracking-widest">SCROLL</p>
+        <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1 sm:gap-2 animate-bounce">
+          <div className="w-px h-6 sm:h-8 bg-gradient-to-b from-transparent via-gray-600 to-transparent opacity-50" />
+          <p className="text-xs sm:text-sm text-gray-400 tracking-widest">SCROLL</p>
         </div>
       </div>
     </div>
