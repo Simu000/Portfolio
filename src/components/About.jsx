@@ -10,15 +10,11 @@ export default function About() {
           About Me
         </h2>
 
-  <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
           {/* Profile Image */}
           <div className="flex-shrink-0 lg:w-1/3 flex justify-center">
             <div className="profile-image-container">
-              <img
-                src={simu}
-                alt="Harsimrat Kaur"
-                className="profile-image"
-              />
+              <img src={simu} alt="Harsimrat Kaur" className="profile-image" />
             </div>
           </div>
 
@@ -200,8 +196,6 @@ export default function About() {
                   </div>
                   <span className="skill-text">Next.js</span>
                 </div>
-
-                
               </div>
             </div>
           </div>
