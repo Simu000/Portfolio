@@ -1,0 +1,26 @@
+.footer {
+  width: 100%;
+  background: #000;
+  border-top: 1px solid #333;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.footer-text {
+  color: #666;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.footer-text:hover {
+  color: #888;
+  transition: color 0.3s ease;
+}
