@@ -212,7 +212,7 @@ export default function About() {
                   </div>
 
                   <div className="skill-badge" ref={addToSkillRefs}>
-                    <span className="skill-text">CSS</span>
+                    <span className="skill-text">Tailwind CSS</span>
                   </div>
 
                   <div className="skill-badge" ref={addToSkillRefs}>
@@ -224,7 +224,7 @@ export default function About() {
                   </div>
 
                   <div className="skill-badge" ref={addToSkillRefs}>
-                    <span className="skill-text">Tailwind</span>
+                    <span className="skill-text">PostgreSQL</span>
                   </div>
 
                   <div className="skill-badge" ref={addToSkillRefs}>
@@ -248,15 +248,15 @@ export default function About() {
                   </div>
 
                   <div className="skill-badge" ref={addToSkillRefs}>
-                    <span className="skill-text">Python</span>
-                  </div>
-
-                  <div className="skill-badge" ref={addToSkillRefs}>
-                    <span className="skill-text">PostgreSQL</span>
-                  </div>
-
-                  <div className="skill-badge" ref={addToSkillRefs}>
                     <span className="skill-text">Next.js</span>
+                  </div>
+
+                  <div className="skill-badge" ref={addToSkillRefs}>
+                    <span className="skill-text">Arduino</span>
+                  </div>
+
+                  <div className="skill-badge" ref={addToSkillRefs}>
+                    <span className="skill-text">RaspberryPi</span>
                   </div>
                 </div>
               </div>
